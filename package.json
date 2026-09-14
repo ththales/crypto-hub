@@ -1,0 +1,24 @@
+{
+  "name": "crypto-hub",
+  "version": "1.0.0",
+  "description": "a web-based cryptography toolkit that brings together a variety of classical ciphers and encryption methods in one place. Inspired by old-school cryptography websites, it allows users to easily encode, decode, and experiment with different techniques",
+  "keywords": [
+    "cryptography",
+    "cipher",
+    "encoding"
+  ],
+  "homepage": "https://github.com/ththales/crypto-hub#readme",
+  "bugs": {
+    "url": "https://github.com/ththales/crypto-hub/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ththales/crypto-hub.git"
+  },
+  "author": "ththales",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
