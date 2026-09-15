@@ -10,20 +10,22 @@
     <body>
         <%- include("./partials/header.ejs"); %>
 
-        <h1>Ciphers</h1>
-        <% if(locals.ciphers) { %>
-            <div class="cards">
-                <% for(let i=0; i<ciphers.length; i++) { %>
-                    <div class="card" style="width: 18rem;">
-                        <div class="card-body">
-                            <h5 class="card-title"><%= ciphers[i].name %></h5>
-                            <p class="card-text"><%= ciphers[i].description %></p>
-                            <a href="<%= ciphers[i].path %>" class="card-link">Access</a>
+        <main>
+            <h2>Ciphers</h1>
+            <% if(locals.ciphers) { %>
+                <div class="cards">
+                    <% for(let i=0; i<ciphers.length; i++) { %>
+                        <div class="card" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title"><%= ciphers[i].name %></h5>
+                                <p class="card-text"><%= ciphers[i].description %></p>
+                                <a href="<%= ciphers[i].path %>" class="card-link">Access</a>
+                            </div>
                         </div>
-                    </div>
-                <% } %>
-            </div>
-        <% } %>
+                    <% } %>
+                </div>
+            <% } %>
+        </main>
 
         <%- include("./partials/footer.ejs") %>
 
