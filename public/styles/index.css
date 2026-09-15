@@ -1,0 +1,23 @@
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.card {
+    width: 100% !important;
+    min-height: 180px;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.card-link {
+    margin-top: auto;
+}
