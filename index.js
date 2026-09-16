@@ -3,10 +3,15 @@ import bodyParser from "body-parser";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 
+// Cifras
+import caesarCipher from "./algorithms/ciphers/caesar.js";
+import { vigenereEncrypt, vigenereDecrypt } from "./algorithms/ciphers/vigenere.js";
 
 const app = express();
 const port = 8080;
 const __dirname = dirname(fileURLToPath(import.meta.url));
+
+let currentYear = new Date().getFullYear();
 
 let ciphers = [
     {
@@ -18,43 +23,56 @@ let ciphers = [
         name: "Vigenère Cipher",
         description: "A polyalphabetic substitution cipher.",
         path: "/ciphers/vigenere"
+    },
+    {
+        name: ""
     }
 ];
-
-// Cipher Functions
-/// Caesar Cipher
-function caesarCipher(text, offset) {
-    let result = "";
-
-    for (let i = 0; i < text.length; i++) {
-
-        let char = text[i];
-
-        if (char >= "A" && char <= "Z") {
-            char = String.fromCharCode(
-                ((char.charCodeAt(0) - 65 + offset) % 26 + 26) % 26 + 65
-            );
-        }
-
-        else if (char >= "a" && char <= "z") {
-            char = String.fromCharCode(
-                ((char.charCodeAt(0) - 97 + offset) % 26 + 26) % 26 + 97
-            );
-        }
-
-        result += char;
-    }
-
-    return result;
-}
-
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-app.post("/caesar", (req, res) => {
-    let currentYear = new Date().getFullYear();
+// Vigenère Cipher
+app.post("/vigenere", (req, res) => {
+    let values = req.body
+    let text = values.text;
+    let key = values.key;
+    let method = values.action;
 
+    var changedText = text;
+
+    if(key) {
+        if(method === "encrypt") {
+            changedText = vigenereEncrypt(text, key);
+        } else {
+            changedText = vigenereDecrypt(text, key);
+        }
+    } else {
+        key = "";
+    }
+
+    res.render(
+        "./ciphers/vigenere.ejs",
+        {
+            text: changedText,
+            key: key,
+            year: currentYear
+        }
+    );
+});
+app.get("/ciphers/vigenere", (req, res) => {
+    res.render(
+        "./ciphers/vigenere.ejs",
+        {
+            text: "",
+            key: "",
+            year: currentYear
+        }
+    );
+});
+
+// Caesar Cipher
+app.post("/caesar", (req, res) => {
     let values = req.body
     let text = values.text;
     let offset = parseInt(values.offset);
@@ -77,13 +95,8 @@ app.post("/caesar", (req, res) => {
             year: currentYear
         }
     );
-
-    console.log(values);
 });
-
 app.get("/ciphers/caesar", (req, res) => {
-    let currentYear = new Date().getFullYear();
-
     res.render(
         "./ciphers/caesar.ejs",
         {
@@ -94,8 +107,6 @@ app.get("/ciphers/caesar", (req, res) => {
 });
 
 app.get("/home", (req, res) => {
-    let currentYear = new Date().getFullYear();
-
     res.render(
         "index.ejs",
         {
