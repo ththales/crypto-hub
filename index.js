@@ -1,5 +1,4 @@
 import express from "express";
-import bodyParser from "body-parser";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 
@@ -92,7 +91,7 @@ let cryptography = [
 
 ];
 
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 // Playfair Cipher
