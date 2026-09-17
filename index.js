@@ -39,6 +39,59 @@ let ciphers = [
     }
 ];
 
+let cryptography = [
+
+    {
+        name: "AES",
+        description: "A symmetric block cipher widely used for secure data encryption.",
+        type: "symmetric",
+        path: "/cryptography/aes"
+    },
+
+    {
+        name: "DES",
+        description: "A symmetric block cipher that encrypts data using a 56-bit key.",
+        type: "symmetric",
+        path: "/cryptography/des"
+    },
+
+    {
+        name: "3DES",
+        description: "A symmetric encryption algorithm that applies DES three times.",
+        type: "symmetric",
+        path: "/cryptography/3des"
+    },
+
+    {
+        name: "ChaCha20",
+        description: "A modern symmetric stream cipher designed for high performance and security.",
+        type: "symmetric",
+        path: "/cryptography/chacha20"
+    },
+
+    {
+        name: "RSA",
+        description: "An asymmetric cryptographic algorithm based on the difficulty of factoring large integers.",
+        type: "asymmetric",
+        path: "/cryptography/rsa"
+    },
+
+    {
+        name: "Diffie-Hellman",
+        description: "A key exchange algorithm that allows two parties to establish a shared secret.",
+        type: "asymmetric",
+        path: "/cryptography/diffie-hellman"
+    },
+
+    {
+        name: "ECC",
+        description: "A family of asymmetric cryptographic algorithms based on elliptic curve mathematics.",
+        type: "asymmetric",
+        path: "/cryptography/ecc"
+    }
+
+];
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
@@ -198,6 +251,7 @@ app.get("/home", (req, res) => {
         "index.ejs",
         {
             ciphers: ciphers,
+            cryptography: cryptography,
             year: currentYear 
         }
     );

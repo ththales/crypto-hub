@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,6 +20,22 @@
                                 <h5 class="card-title"><%= ciphers[i].name %></h5>
                                 <p class="card-text"><%= ciphers[i].description %></p>
                                 <a href="<%= ciphers[i].path %>" class="card-link">Access</a>
+                            </div>
+                        </div>
+                    <% } %>
+                </div>
+            <% } %>
+
+            <h2>Encryption</h2>
+            <% if(locals.cryptography) { %>
+                <div class="cards">
+                    <% for(let i=0; i<cryptography.length; i++) { %>
+                        <div class="card" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title"><%= cryptography[i].name %></h5>
+                                <p class="card-text"><%= cryptography[i].description %></p>
+                                <p class="card-text"><b><%= cryptography[i].type %></b></p>
+                                <a href="<%= cryptography[i].path %>" class="card-link">Access</a>
                             </div>
                         </div>
                     <% } %>
