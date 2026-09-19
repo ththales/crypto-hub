@@ -168,20 +168,6 @@ router.get("/chacha20", (req, res) => {
 });
 
 // RSA
-router.get("/rsa", (req, res) => {
-    const { publicKey, privateKey } = generateKeyPair();
-    res.render(
-        "./crypto/rsa.ejs",
-        {
-            text: "",
-            publicKey,
-            privateKey,
-            error: null,
-            year: currentYear
-        }
-    );
-});
-
 router.post("/rsa", (req, res) => {
     const text = req.body.text || "";
     const method = req.body.action || "";
@@ -215,6 +201,19 @@ router.post("/rsa", (req, res) => {
             publicKey,
             privateKey,
             error,
+            year: currentYear
+        }
+    );
+});
+router.get("/rsa", (req, res) => {
+    const { publicKey, privateKey } = generateKeyPair();
+    res.render(
+        "./crypto/rsa.ejs",
+        {
+            text: "",
+            publicKey,
+            privateKey,
+            error: null,
             year: currentYear
         }
     );
