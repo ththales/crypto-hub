@@ -1,0 +1,25 @@
+header {
+    background: linear-gradient(90deg, black, rgb(43, 43, 43));
+}
+
+nav {
+    padding: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#left {
+    display: flex;
+    align-items: center;
+}
+
+#right {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+li {
+    list-style: none;
+}

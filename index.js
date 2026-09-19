@@ -30,56 +30,97 @@ let ciphers = [
     {
         name: "Caesar Cipher",
         description: "A substitution cipher based on shifting letters.",
-        path: "/ciphers/caesar"
+        path: "/cipher/caesar"
     },
     {
         name: "Vigenère Cipher",
         description: "A polyalphabetic substitution cipher.",
-        path: "/ciphers/vigenere"
+        path: "/cipher/vigenere"
     },
     {
         name: "Rot13 Cipher",
         description: "A substitution cipher that shifts letters by 13 positions.",
-        path: "/ciphers/rot13"
+        path: "/cipher/rot13"
     },
     {
         name: "Playfair Cipher",
         description: "A digraph substitution cipher that encrypts pairs of letters.",
-        path: "/ciphers/playfair"
+        path: "/cipher/playfair"
     }
 ];
 
 let cryptography = [
+
     {
         name: "AES",
         description: "A symmetric block cipher widely used for secure data encryption.",
         type: "symmetric",
         path: "/crypto/aes"
     },
+
     {
         name: "DES",
         description: "A symmetric block cipher that encrypts data using a 56-bit key.",
         type: "symmetric",
         path: "/crypto/des"
     },
+
     {
         name: "3DES",
         description: "A symmetric encryption algorithm that applies DES three times.",
         type: "symmetric",
         path: "/crypto/3des"
     },
+
     {
         name: "ChaCha20",
         description: "A modern symmetric stream cipher designed for high performance and security.",
         type: "symmetric",
         path: "/crypto/chacha20"
     },
+
     {
         name: "RSA",
         description: "An asymmetric cryptographic algorithm based on the difficulty of factoring large integers.",
         type: "asymmetric",
         path: "/crypto/rsa"
+    },
+
+    {
+        name: "ARABICA-2RS",
+        description: "A custom substitution cipher that encrypts text using Arabic characters.",
+        type: "custom",
+        path: "/crypto/arabica"
+    },
+
+    {
+        name: "CHINZO-72C",
+        description: "A custom substitution cipher that encrypts text using Chinese characters.",
+        type: "custom",
+        path: "/crypto/chinzo"
+    },
+
+    {
+        name: "KOREX-3S",
+        description: "A custom substitution cipher that encrypts text using Korean Hangul characters.",
+        type: "custom",
+        path: "/crypto/korex"
+    },
+
+    {
+        name: "JAPOO-C2S",
+        description: "A custom substitution cipher that encrypts text using Japanese Hiragana characters.",
+        type: "custom",
+        path: "/crypto/japoo"
+    },
+
+    {
+        name: "HINDIA-4X",
+        description: "A custom substitution cipher that encrypts text using Hindi Devanagari characters.",
+        type: "custom",
+        path: "/crypto/hindia"
     }
+
 ];
 
 app.use(express.urlencoded({ extended: true }));
@@ -310,7 +351,7 @@ app.post("/playfair", (req, res) => {
     }
 
     res.render(
-        "./ciphers/playfair.ejs",
+        "./cipher/playfair.ejs",
         {
             text: changedText,
             key: key,
@@ -318,9 +359,9 @@ app.post("/playfair", (req, res) => {
         }
     );
 });
-app.get("/ciphers/playfair", (req, res) => {
+app.get("/cipher/playfair", (req, res) => {
     res.render(
-        "./ciphers/playfair.ejs",
+        "./cipher/playfair.ejs",
         {
             text: "",
             key: "",
@@ -345,16 +386,16 @@ app.post("/rot13", (req, res) => {
     }
 
     res.render(
-        "./ciphers/rot13.ejs",
+        "./cipher/rot13.ejs",
         {
             text: changedText,
             year: currentYear
         }
     );
 });
-app.get("/ciphers/rot13", (req, res) => {
+app.get("/cipher/rot13", (req, res) => {
     res.render(
-        "./ciphers/rot13.ejs",
+        "./cipher/rot13.ejs",
         {
             text: "",
             year: currentYear
@@ -382,7 +423,7 @@ app.post("/vigenere", (req, res) => {
     }
 
     res.render(
-        "./ciphers/vigenere.ejs",
+        "./cipher/vigenere.ejs",
         {
             text: changedText,
             key: key,
@@ -390,9 +431,9 @@ app.post("/vigenere", (req, res) => {
         }
     );
 });
-app.get("/ciphers/vigenere", (req, res) => {
+app.get("/cipher/vigenere", (req, res) => {
     res.render(
-        "./ciphers/vigenere.ejs",
+        "./cipher/vigenere.ejs",
         {
             text: "",
             key: "",
@@ -419,16 +460,16 @@ app.post("/caesar", (req, res) => {
     }
 
     res.render(
-        "./ciphers/caesar.ejs",
+        "./cipher/caesar.ejs",
         {
             text: changedText,
             year: currentYear
         }
     );
 });
-app.get("/ciphers/caesar", (req, res) => {
+app.get("/cipher/caesar", (req, res) => {
     res.render(
-        "./ciphers/caesar.ejs",
+        "./cipher/caesar.ejs",
         {
             text: "",
             year: currentYear
