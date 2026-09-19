@@ -1,0 +1,13 @@
+footer {
+    min-height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(180deg, #111 0%, #080808 50%, #000 100%);
+    border-bottom: 1px solid #242424;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.8), 0 0 20px rgba(40, 40, 80, 0.15);
+}
+
+footer p {
+    margin: 0;
+}
