@@ -1,29 +1,40 @@
 <%- include("../partials/header.ejs"); %>
-
 <main>
-    <h2>RSA Encryption</h1>
+    <h2>RSA Encryption</h2>
     <br>
+
+    <% if (error) { %>
+        <p style="color: red;"><%= error %></p>
+    <% } %>
+
     <form action="/crypto/rsa" method="POST">
-    
+        <label for="public-key">Public Key (Use to encrypt)</label>
+        <br>
+        <textarea name="publicKey" id="public-key" rows="6" style="resize: none; width: 100%;"><%= publicKey %></textarea>
+        <br><br>
+
+        <label for="private-key">Private privada (Use to decrypt)</label>
+        <br>
+        <textarea name="privateKey" id="private-key" rows="10" style="resize: none; width: 100%;"><%= privateKey %></textarea>
+        <br><br>
+
+        <button type="submit" name="action" value="newkeys">
+            Generate a New Key Pair
+        </button>
+        <br><br>
+
         <label for="text-input">
             Type or paste in the text you want to encrypt or decrypt
         </label>
-    
         <br>
-    
         <textarea name="text" id="text-input" style="resize: none"><%= text %></textarea>
-    
         <br><br>
-    
         <button type="submit" name="action" value="encrypt">
             Encrypt
         </button>
-    
         <button type="submit" name="action" value="decrypt">
             Decrypt
         </button>
-    
     </form>
 </main>
-
 <%- include("../partials/footer.ejs") %>

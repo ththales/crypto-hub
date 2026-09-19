@@ -1,30 +1,30 @@
 import NodeRSA from "node-rsa";
 
-const key = new NodeRSA({ b: 2048 });
+function generateKeyPair() {
+    const key = new NodeRSA({ b: 2048 });
+    key.setOptions({ encryptionScheme: "pkcs1_oaep" });
+    return {
+        publicKey: key.exportKey("public"),
+        privateKey: key.exportKey("private")
+    };
+}
 
-key.setOptions({
-    encryptionScheme: "pkcs1_oaep"
-});
-
-function rsaEncrypt(text) {
+function rsaEncrypt(text, publicKey) {
+    const key = new NodeRSA();
+    key.setOptions({ encryptionScheme: "pkcs1_oaep" });
+    key.importKey(publicKey, "public");
     return key.encrypt(text, "base64");
 }
 
-function rsaDecrypt(text) {
+function rsaDecrypt(text, privateKey) {
+    const key = new NodeRSA();
+    key.setOptions({ encryptionScheme: "pkcs1_oaep" });
+    key.importKey(privateKey, "private");
     return key.decrypt(text, "utf8");
 }
 
-function getPublicKey() {
-    return key.exportKey("public");
-}
-
-function getPrivateKey() {
-    return key.exportKey("private");
-}
-
 export {
+    generateKeyPair,
     rsaEncrypt,
-    rsaDecrypt,
-    getPublicKey,
-    getPrivateKey
+    rsaDecrypt
 };

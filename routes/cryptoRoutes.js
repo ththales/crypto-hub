@@ -5,7 +5,7 @@ import { aesEncrypt, aesDecrypt } from "../algorithms/crypto/aes.js"; // AES
 import { desEncrypt, desDecrypt } from "../algorithms/crypto/des.js"; // DES
 import { tripleDesEncrypt, tripleDesDecrypt } from "../algorithms/crypto/3des.js"; // 3DES
 import { chacha20Encrypt, chacha20Decrypt } from "../algorithms/crypto/chacha20.js"; // ChaCha20
-import { rsaEncrypt, rsaDecrypt, getPublicKey } from "../algorithms/crypto/rsa.js"; // RSA
+import { generateKeyPair, rsaEncrypt, rsaDecrypt } from "../algorithms/crypto/rsa.js";
 
 const router = express.Router();
 
@@ -168,46 +168,56 @@ router.get("/chacha20", (req, res) => {
 });
 
 // RSA
-router.post("/rsa", (req, res) => {
-    let text = req.body.text || "";
-    let method = req.body.action || "";
+router.get("/rsa", (req, res) => {
+    const { publicKey, privateKey } = generateKeyPair();
+    res.render(
+        "./crypto/rsa.ejs",
+        {
+            text: "",
+            publicKey,
+            privateKey,
+            error: null,
+            year: currentYear
+        }
+    );
+});
 
+router.post("/rsa", (req, res) => {
+    const text = req.body.text || "";
+    const method = req.body.action || "";
+    let publicKey = req.body.publicKey || "";
+    let privateKey = req.body.privateKey || "";
     let changedText = text;
+    let error = null;
 
     try {
-        if (text) {
+        if (method === "newkeys") {
+            const pair = generateKeyPair();
+            publicKey = pair.publicKey;
+            privateKey = pair.privateKey;
+            changedText = "";
+        } else if (text) {
             if (method === "encrypt") {
-                changedText = rsaEncrypt(text);
+                changedText = rsaEncrypt(text, publicKey);
             } else if (method === "decrypt") {
-                changedText = rsaDecrypt(text);
+                changedText = rsaDecrypt(text, privateKey);
             }
         }
-    } catch (error) {
+    } catch (err) {
         changedText = "";
+        error = "Não foi possível processar o texto com as chaves fornecidas.";
     }
 
     res.render(
         "./crypto/rsa.ejs",
         {
             text: changedText,
-            publicKey: getPublicKey(),
+            publicKey,
+            privateKey,
+            error,
             year: currentYear
         }
     );
-
-});
-
-router.get("/rsa", (req, res) => {
-
-    res.render(
-        "./crypto/rsa.ejs",
-        {
-            text: "",
-            publicKey: getPublicKey(),
-            year: currentYear
-        }
-    );
-
 });
 
 export default router;
