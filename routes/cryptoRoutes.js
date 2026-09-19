@@ -205,7 +205,7 @@ router.post("/rsa", (req, res) => {
         }
     } catch (err) {
         changedText = "";
-        error = "Não foi possível processar o texto com as chaves fornecidas.";
+        error = "Unable to process the text using the provided keys.";
     }
 
     res.render(
