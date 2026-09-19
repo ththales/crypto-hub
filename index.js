@@ -19,6 +19,12 @@ import {
     rsaDecrypt,
     getPublicKey
 } from "./algorithms/crypto/rsa.js";
+import { arabicaEncrypt, arabicaDecrypt } from "./algorithms/custom/arabica.js"; // ARABICA-2RS
+import { chinzoEncrypt, chinzoDecrypt} from "./algorithms/custom/chinzo.js"; // CHINZO-72C
+import { korexEncrypt, korexDecrypt} from "./algorithms/custom/korex.js"; // KOREX-3S
+import { japooEncrypt, japooDecrypt } from "./algorithms/custom/japoo.js"; // JAPOO-C2S
+import { hindiaEncrypt, hindiaDecrypt} from "./algorithms/custom/hindia.js"; //HINDIA-4X
+
 
 const app = express();
 const port = 8080;
@@ -50,85 +56,263 @@ let ciphers = [
 ];
 
 let cryptography = [
-
     {
         name: "AES",
         description: "A symmetric block cipher widely used for secure data encryption.",
         type: "symmetric",
         path: "/crypto/aes"
     },
-
     {
         name: "DES",
         description: "A symmetric block cipher that encrypts data using a 56-bit key.",
         type: "symmetric",
         path: "/crypto/des"
     },
-
     {
         name: "3DES",
         description: "A symmetric encryption algorithm that applies DES three times.",
         type: "symmetric",
         path: "/crypto/3des"
     },
-
     {
         name: "ChaCha20",
         description: "A modern symmetric stream cipher designed for high performance and security.",
         type: "symmetric",
         path: "/crypto/chacha20"
     },
-
     {
         name: "RSA",
         description: "An asymmetric cryptographic algorithm based on the difficulty of factoring large integers.",
         type: "asymmetric",
         path: "/crypto/rsa"
-    },
+    }
 
+];
+
+let custom = [
     {
         name: "ARABICA-2RS",
         description: "A custom substitution cipher that encrypts text using Arabic characters.",
         type: "custom",
-        path: "/crypto/arabica"
+        path: "/custom/arabica"
     },
-
-    {
-        name: "CHINZO-72C",
-        description: "A custom substitution cipher that encrypts text using Chinese characters.",
-        type: "custom",
-        path: "/crypto/chinzo"
-    },
-
-    {
-        name: "KOREX-3S",
-        description: "A custom substitution cipher that encrypts text using Korean Hangul characters.",
-        type: "custom",
-        path: "/crypto/korex"
-    },
-
-    {
-        name: "JAPOO-C2S",
-        description: "A custom substitution cipher that encrypts text using Japanese Hiragana characters.",
-        type: "custom",
-        path: "/crypto/japoo"
-    },
-
     {
         name: "HINDIA-4X",
         description: "A custom substitution cipher that encrypts text using Hindi Devanagari characters.",
         type: "custom",
-        path: "/crypto/hindia"
+        path: "/custom/hindia"
+    },
+    {
+        name: "JAPOO-C2S",
+        description: "A custom substitution cipher that encrypts text using Japanese Hiragana characters.",
+        type: "custom",
+        path: "/custom/japoo"
+    },
+    {
+        name: "CHINZO-72C",
+        description: "A custom substitution cipher that encrypts text using Chinese characters.",
+        type: "custom",
+        path: "/custom/chinzo"
+    },
+    {
+        name: "KOREX-3S",
+        description: "A custom substitution cipher that encrypts text using Korean Hangul characters.",
+        type: "custom",
+        path: "/custom/korex"
     }
-
 ];
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
+// KOREX-3S Encryption
+app.post("/korex", (req, res) => {
+    let values = req.body;
+    let text = values.text;
+    let method = values.action;
+
+    let changedText = text;
+
+    if(text) {
+        if(method === "encrypt") {
+            changedText = korexEncrypt(text);
+        } else {
+            changedText = korexDecrypt(text);
+        }
+    } else {
+        changedText = "";
+    }
+
+    res.render(
+        "./custom/korex.ejs",
+        {
+            text: changedText,
+            year: currentYear
+        }
+    );
+});
+app.get("/custom/korex", (req, res) => {
+    res.render(
+        "./custom/korex.ejs",
+        {
+            text: "",
+            year: currentYear
+        }
+
+    );
+});
+
+// CHINZO-72C Encryption
+app.post("/chinzo", (req, res) => {
+    let values = req.body;
+    let text = values.text;
+    let method = values.action;
+
+    let changedText = text;
+
+    if(text) {
+        if(method === "encrypt") {
+            changedText = chinzoEncrypt(text);
+        } else {
+            changedText = chinzoDecrypt(text);
+        }
+    } else {
+        changedText = "";
+    }
+
+    res.render(
+        "./custom/chinzo.ejs",
+        {
+            text: changedText,
+            year: currentYear
+        }
+    );
+});
+app.get("/custom/chinzo", (req, res) => {
+    res.render(
+        "./custom/chinzo.ejs",
+        {
+            text: "",
+            year: currentYear
+        }
+
+    );
+});
+
+// JAPOO-C2S Encryption
+app.post("/japoo", (req, res) => {
+    let values = req.body;
+    let text = values.text;
+    let method = values.action;
+
+    let changedText = text;
+
+    if(text) {
+        if(method === "encrypt") {
+            changedText = japooEncrypt(text);
+        } else {
+            changedText = japooDecrypt(text);
+        }
+    } else {
+        changedText = "";
+    }
+
+    res.render(
+        "./custom/japoo.ejs",
+        {
+            text: changedText,
+            year: currentYear
+        }
+    );
+});
+app.get("/custom/japoo", (req, res) => {
+    res.render(
+        "./custom/japoo.ejs",
+        {
+            text: "",
+            year: currentYear
+        }
+
+    );
+});
+
+// HINDIA-4X Encryption
+app.post("/hindia", (req, res) => {
+    let values = req.body;
+    let text = values.text;
+    let method = values.action;
+
+    let changedText = text;
+
+    if(text) {
+        if(method === "encrypt") {
+            changedText = hindiaEncrypt(text);
+        } else {
+            changedText = hindiaDecrypt(text);
+        }
+    } else {
+        changedText = "";
+    }
+
+    res.render(
+        "./custom/hindia.ejs",
+        {
+            text: changedText,
+            year: currentYear
+        }
+    );
+});
+app.get("/custom/hindia", (req, res) => {
+    res.render(
+        "./custom/hindia.ejs",
+        {
+            text: "",
+            year: currentYear
+        }
+
+    );
+});
+
+// ARABICA-2RS Encryption
+app.post("/arabica", (req, res) => {
+    let values = req.body;
+    let text = values.text;
+    let method = values.action;
+
+    let changedText = text;
+
+    if(text) {
+        if(method === "encrypt") {
+            changedText = arabicaEncrypt(text);
+        } else {
+            changedText = arabicaDecrypt(text);
+        }
+    } else {
+        changedText = "";
+    }
+
+    res.render(
+        "./custom/arabica.ejs",
+        {
+            text: changedText,
+            year: currentYear
+        }
+    );
+});
+app.get("/custom/arabica", (req, res) => {
+    res.render(
+        "./custom/arabica.ejs",
+        {
+            text: "",
+            year: currentYear
+        }
+
+    );
+});
+
+
 // RSA Encryption
 app.post("/rsa", (req, res) => {
-
     let text = req.body.text || "";
     let method = req.body.action || "";
 
@@ -483,6 +667,7 @@ app.get("/home", (req, res) => {
         {
             ciphers: ciphers,
             cryptography: cryptography,
+            custom: custom,
             year: currentYear 
         }
     );

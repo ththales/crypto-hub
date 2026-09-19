@@ -8,8 +8,6 @@
             <p class="lead mb-4">Explore the world of cryptography in one place. Crypto-Hub is a web-based toolkit for encoding, decoding, and experimenting with classical ciphers and modern cryptographic algorithms. Inspired by the simplicity of old-school cryptography websites, it turns complex techniques into an accessible and interactive experience.</p>
         </div>
     </div>
-    
-    <br>
 
     <div class="main-content">
         <h2>Ciphers</h1>
@@ -40,6 +38,25 @@
                                 <h5 class="card-title"><%= cryptography[i].name %></h5>
                                 <p class="card-text"><%= cryptography[i].description %></p>
                                 <p class="card-text"><b><%= cryptography[i].type %></b></p>
+                            </div>
+                        </div>
+                    </a>
+                <% } %>
+            </div>
+        <% } %>
+
+        <br>
+
+        <h2>Custom Algorithms</h2>
+        <% if(locals.custom) { %>
+            <div class="cards">
+                <% for(let i=0; i<custom.length; i++) { %>
+                    <a href="<%= custom[i].path %>" class="card-link">
+                        <div class="card" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title"><%= custom[i].name %></h5>
+                                <p class="card-text"><%= custom[i].description %></p>
+                                <p class="card-text"><b><%= custom[i].type %></b></p>
                             </div>
                         </div>
                     </a>
